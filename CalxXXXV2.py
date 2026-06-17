@@ -1,34 +1,20 @@
 import streamlit as st
-
 import pandas as pd
-
 import numpy as np
 import locale
 
-
-
 # Define a localização para o português do Brasil
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
 
 #valor = 1550.456
 
 #valor_formatado = locale.currency(valor, grouping=True)
 
-
-
 # CALX Configuração da página do Streamlit
 
 st.set_page_config(page_title="Valor de Diagnósticos TIC-BNCC", layout="wide")
 
-
-
-
-
-
-
 # 1. Cria duas colunas: uma menor para o logo e uma maior para o texto
-
 # O parâmetro vertical_alignment="center" garante que fiquem bem alinhados
 
 
