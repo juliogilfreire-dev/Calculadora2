@@ -170,7 +170,6 @@ for esc in escolas_teste:
         #linha.append(locale.currency(rec_por_escola_sim, grouping=True))
     
     linha.append(formatar_brl(rec_por_escola_sim))
-
     
     matriz_dados.append(linha)
 
