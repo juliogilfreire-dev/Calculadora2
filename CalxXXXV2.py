@@ -4,12 +4,18 @@ import pandas as pd
 import numpy as np
 import locale
 
+def formatar_brl(valor):
+    # Formata o número com duas casas decimais, inverte pontos e vírgulas
+    v = f"R$ {valor:,.2f}"
+    # Substituição para o padrão brasileiro (troca a vírgula temporariamente)
+    return v.replace(",", "X").replace(".", ",").replace("X", ".")
+
 # CORREÇÃO: Configura o locale para português para o funcionamento do locale.currency
-try:
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-except Exception:
-    # Caso o servidor/sistema não tenha o locale pt_BR instalado (comum no Linux/Streamlit Cloud)
-    locale.setlocale(locale.LC_ALL, '') 
+#try:
+#  locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+#except Exception:
+# Caso o servidor/sistema não tenha o locale pt_BR instalado (comum no Linux/Streamlit Cloud)
+#locale.setlocale(locale.LC_ALL, '') 
 
 # CALX Configuração da página do Streamlit
 # CORREÇÃO: Mudado de str.set_page_config para st.set_page_config
@@ -161,7 +167,11 @@ for esc in escolas_teste:
         margem_un = liq_sim / esc
 
         # Uso do locale.currency agora está protegido pela configuração inicial
-        linha.append(locale.currency(rec_por_escola_sim, grouping=True))
+        #linha.append(locale.currency(rec_por_escola_sim, grouping=True))
+    
+    linha.append(formatar_brl(rec_por_escola_sim))
+
+    
     matriz_dados.append(linha)
 
 df_matriz = pd.DataFrame(
