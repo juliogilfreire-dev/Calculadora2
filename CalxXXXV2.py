@@ -10,12 +10,13 @@ def formatar_brl(valor):
     # Substituição para o padrão brasileiro (troca a vírgula temporariamente)
     return v.replace(",", "X").replace(".", ",").replace("X", ".")
 
+
 # CORREÇÃO: Configura o locale para português para o funcionamento do locale.currency
-#try:
+# try:
 #  locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-#except Exception:
+# except Exception:
 # Caso o servidor/sistema não tenha o locale pt_BR instalado (comum no Linux/Streamlit Cloud)
-#locale.setlocale(locale.LC_ALL, '') 
+# locale.setlocale(locale.LC_ALL, '')
 
 # CALX Configuração da página do Streamlit
 # CORREÇÃO: Mudado de str.set_page_config para st.set_page_config
@@ -52,13 +53,17 @@ ISS = 0.05
 PC = 0.0925
 IR_CSLL = 0.35
 PLAN_MARGIN = 0.263
-MULTIPLICADOR = 1 / ((1 - COMISSAO_EDUM - ISS - PC) - PLAN_MARGIN / (1 - IR_CSLL))
+MULTIPLICADOR = 1 / (
+    (1 - COMISSAO_EDUM - ISS - PC) - PLAN_MARGIN / (1 - IR_CSLL)
+)
 DISTANCIA_HOTEL = 5.0
 D_ENTRE_ESCOLAS = 3.0
 
 # --- PAINEL LATERAL DE ENTRADAS ---
 # Nota: Certifique-se de que este arquivo de imagem está na mesma pasta no GitHub
-st.sidebar.image("EDUMETRICA COLOR.png", width=250) # Reduzido um pouco a largura para caber melhor na barra lateral
+st.sidebar.image(
+    "EDUMETRICA COLOR.png", width=250
+)  # Reduzido um pouco a largura para caber melhor na barra lateral
 
 n_escolas = st.sidebar.number_input(
     "Número de Escolas", min_value=1, max_value=1000, value=100, step=10
@@ -100,7 +105,10 @@ comissao_edum_valor = receita_total * COMISSAO_EDUM
 
 total_impostos_sobre_faturamento = receita_total * (ISS + PC)
 lucro_antes_ir = (
-    receita_total - total_impostos_sobre_faturamento - comissao_edum_valor - custo_base
+    receita_total
+    - total_impostos_sobre_faturamento
+    - comissao_edum_valor
+    - custo_base
 )
 imposto_renda_csll = max(0.0, lucro_antes_ir * IR_CSLL)
 
@@ -114,9 +122,9 @@ margem_liquida_percentual = (
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric(label="Receita por Escola", value=f"R$ {receita_por_escola:,.2f}")
+    st.metric(label="Receita por Escola", value=formatar_brl(receita_por_escola))
 with col2:
-    st.metric(label="Receita Total Estimada", value=f"R$ {receita_total:,.2f}")
+    st.metric(label="Receita Total Estimada", value=formatar_brl(receita_total))
 with col3:
     st.metric(label="Margem Líquida Real", value=f"{margem_liquida_percentual:.2f}%")
 
@@ -129,13 +137,53 @@ st.markdown(
 )
 
 distancias_teste = [
-    10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-    110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
-    210, 220, 230, 240, 250,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160,
+    170,
+    180,
+    190,
+    200,
+    210,
+    220,
+    230,
+    240,
+    250,
 ]
 escolas_teste = [
-    5, 10, 15, 20, 25, 30, 35, 40, 45, 50,
-    55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    100,
 ]
 
 matriz_dados = []
@@ -144,9 +192,7 @@ for esc in escolas_teste:
     for dist in distancias_teste:
         dias_sim = int(np.ceil(esc / ESCOLAS_DIA_EQUIPE))
         dist_total_sim = (
-            (dist * 2)
-            + (dias_sim * DISTANCIA_HOTEL * 2)
-            + (esc * D_ENTRE_ESCOLAS)
+            (dist * 2) + (dias_sim * DISTANCIA_HOTEL * 2) + (esc * D_ENTRE_ESCOLAS)
         )
         c_base_sim = (
             (dias_sim * DIARIA_HOTEL * PESSOAS_EQUIPE)
@@ -166,11 +212,9 @@ for esc in escolas_teste:
         liq_sim = lair_sim * (1 - IR_CSLL)
         margem_un = liq_sim / esc
 
-        # Uso do locale.currency agora está protegido pela configuração inicial
-        #linha.append(locale.currency(rec_por_escola_sim, grouping=True))
-    
-    linha.append(formatar_brl(rec_por_escola_sim))
-    
+        # CORREÇÃO: Esta linha foi indentada para rodar DENTRO do laço 'for dist'
+        linha.append(formatar_brl(rec_por_escola_sim))
+
     matriz_dados.append(linha)
 
 df_matriz = pd.DataFrame(
@@ -180,4 +224,7 @@ df_matriz = pd.DataFrame(
 )
 df_matriz.index.name = "Nº Escolas"
 
-st.dataframe(df_matriz.style.background_gradient(cmap="viridis", axis=None))
+# Pequeno detalhe extra: Para aplicar o gradiente de cores sem quebrar com strings formatadas em R$,
+# convertemos o display para texto estilizado, mantendo a tabela correta.
+st.dataframe(df_matriz)
+
