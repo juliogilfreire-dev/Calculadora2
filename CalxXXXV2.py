@@ -125,8 +125,8 @@ with col1:
     st.metric(label="Receita por Escola", value=formatar_brl(receita_por_escola))
 with col2:
     st.metric(label="Receita Total Estimada", value=formatar_brl(receita_total))
-with col3:
-    st.metric(label="Margem Líquida Real", value=f"{margem_liquida_percentual:.2f}%")
+#with col3:
+    #st.metric(label="Margem Líquida Real", value=f"{margem_liquida_percentual:.2f}%")
 
 
 # --- MATRIZ DE SENSIBILIDADE ---
