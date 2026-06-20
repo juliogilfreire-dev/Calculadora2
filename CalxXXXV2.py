@@ -31,7 +31,7 @@ with col1:
 with col2:
     st.title("Calculadora de Orçamento Simplificado")
 
-st.subheader("Diagnóstico TIC / BNCC Escolas PE -- julho 2026*")
+st.subheader("Diagnóstico TIC / BNCC Escolas PE -- julho 2026**")
 st.markdown("---")
 
 
@@ -48,7 +48,7 @@ PESSOAS_EQUIPE = 2
 EQUIPES = 1
 ESCOLAS_DIA_EQUIPE = 3
 
-COMISSAO_EDUM = 0.3
+COMISSAO_EDUM = 0.2
 ISS = 0.05
 PC = 0.0925
 IR_CSLL = 0.35
