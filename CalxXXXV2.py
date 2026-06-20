@@ -31,7 +31,7 @@ with col1:
 with col2:
     st.title("Calculadora de Orçamento Simplificado")
 
-st.subheader("Diagnóstico TIC / BNCC Escolas PE")
+st.subheader("Diagnóstico TIC / BNCC Escolas PE -- JULHO 2026")
 st.markdown("---")
 
 
