@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+⁷# -*- coding: utf-8 -*-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -48,11 +48,11 @@ PESSOAS_EQUIPE = 2
 EQUIPES = 1
 ESCOLAS_DIA_EQUIPE = 3
 
-COMISSAO_EDUM = 0.4
+COMISSAO_EDUM = 0.3
 ISS = 0.05
 PC = 0.0925
 IR_CSLL = 0.35
-PLAN_MARGIN = 0.2
+PLAN_MARGIN = 0.3
 MULTIPLICADOR =( 1 /(1 - COMISSAO_EDUM - ISS - PC - (PLAN_MARGIN / (1 - IR_CSLL))))
 
 DISTANCIA_HOTEL = 5.0
